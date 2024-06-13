@@ -1,0 +1,33 @@
+# Virtual environment
+myvenv/
+
+# Python bytecode
+*.pyc
+__pycache__/
+
+# Django specific
+*.log
+local_settings.py
+db.sqlite3
+media/
+
+# If you are using Django migrations, you might want to exclude the migration files during initial development
+# myapp/migrations/
+
+# Ignore static files build
+staticfiles/
+static/
+
+# Ignore compiled translations
+*.mo
+
+# Ignore cache files
+*.cache
+
+# Ignore IDE files
+.vscode/
+.idea/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
