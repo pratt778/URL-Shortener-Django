@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Url Shortener</title>
+</head>
+<body>
+    <form action="{% url "createUrl" %}" method="post">
+        {% csrf_token %}
+       <div>
+        <label for="url">Url:</label>
+        <input type="text" name="url" id="url" placeholder="Enter your Url">
+       </div>
+        <input type="submit" name="submit" id="btn_submit">
+
+    </form>
+</body>
+<script type="text/javascript"></script>
+<script src="/../../JQuery/jquery-3.7.1.min.js"></script>
+<script>
+    
+</script>
+</html>
