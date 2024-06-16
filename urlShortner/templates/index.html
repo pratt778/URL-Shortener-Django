@@ -1,24 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Url Shortener</title>
 </head>
+
 <body>
-    <form action="{% url "createUrl" %}" method="post">
+    <form method="post" id='myform'>
         {% csrf_token %}
-       <div>
-        <label for="url">Url:</label>
-        <input type="text" name="url" id="url" placeholder="Enter your Url">
-       </div>
+        <div>
+            <label for="url">Url:</label>
+            <input type="text" name="url" id="url" placeholder="Enter your Url">
+        </div>
         <input type="submit" name="submit" id="btn_submit">
 
     </form>
+    <div>
+        <h2>Shortened link</h2>
+        <a href="" id="mylink"></a>
+    </div>
+    <div>
+        <h2 id="alllink">all short links</h2>
+        <ul id="myurls" style="display: flex; flex-direction: column; gap: 1rem;">
+
+        </ul>
+    </div>
 </body>
-<script type="text/javascript"></script>
-<script src="/../../JQuery/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
-    
+    $(document).ready(function () {
+
+        $(document).on('submit', '#myform', function (e) {
+            e.preventDefault();
+            // console.log('submitt')
+            $.ajax({
+                type: "POST",
+                url: "{% url 'createUrl' %}",
+                data: {
+                    url: $('#url').val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: function (response) {
+                    $('#mylink').html('127.0.0.1.8000/' + response)
+                    $('#mylink').attr('href', response)
+                }
+            })
+        });
+
+        setInterval(() => {
+
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'getlink' %}",
+                // data:{
+                //     csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                // },
+                success: function (response) {
+                    // console.log(response)
+                    $('#myurls').empty()
+                    for (var u in response.myurl) {
+                        // console.log(response.myurl[u].uid)
+                        urls = `<a href='${response.myurl[u].uid}'>${response.myurl[u].uid}</a>`
+                        $('#myurls').append(urls)
+                    }
+                }
+            })
+        }, 3000);
+    })
 </script>
+
 </html>
